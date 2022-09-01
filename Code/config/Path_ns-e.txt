@@ -1,0 +1,4 @@
+
+move_in_directions = [n, s];
+
+move_out_direction = e

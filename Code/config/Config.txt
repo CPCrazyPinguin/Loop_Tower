@@ -1,0 +1,14 @@
+
+fps = 60;
+
+Spieler HP = 100;
+
+Spieler Grundschaden = 4;
+
+Spieler StartItems = [Salbe, Stein, Stock];
+
+WorldGeneration = 	Felsen: 2%,
+			Schleim: 2%,
+			Baum: 1%,
+			Beerenbusch: 1%,
+			Golem: 0.5%
