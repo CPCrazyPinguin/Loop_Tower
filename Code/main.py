@@ -129,6 +129,10 @@ class Programm:
         self.bild_groesse = zusatz.Vector(self.width, self.height)
         self.Level.rescale(self.bild_groesse)
 
+        self.Controller.size = self.Level.map.felder[0].draw_size
+        self.Controller.mous_matrix = self.Controller.iso_matrix.get_multi_w_h(self.Controller.size.x,self.Controller.size.y)
+        self.Controller.mous_matrix = self.Controller.mous_matrix.get_inverse()
+
 
 #rufe das Spiel auf
 while True:

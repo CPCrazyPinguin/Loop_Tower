@@ -12,6 +12,52 @@ class Vector:
     def round(self,var):
         self.x = round(self.x,var)
         self.y = round(self.y, var)
+        if var == 0:
+            self.x = int(self.x)
+            self.y = int(self.y)
+    def add(self,vector):
+        self.x += vector.x
+        self.y += vector.y
+    def sub(self,vector):
+        self.x -= vector.x
+        self.y -= vector.y
+
+class Matrix:
+    def __init__(self, x1, y1,
+                       x2, y2):
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
+
+    def get_multi(self,var):
+        m = Matrix(self.x1,self.y1,
+                   self.x2,self.y2)
+        m.x1 = m.x1*var
+        m.y1 = m.y1*var
+        m.x2 = m.x2*var
+        m.y2 = m.y2*var
+        return m
+
+    def get_inverse(self):
+        m = Matrix(self.y2,-self.y1,-self.x2,self.x1)
+        ad_bc = 1/(m.x1*m.y2-m.y1*m.x2)
+        m = m.get_multi(ad_bc)
+        return m
+
+    def get_vector_multi(self,vector):
+        v = Vector(vector.x*self.x1 + vector.y*self.y1, vector.x*self.x2 + vector.y*self.y2)
+        return v
+
+    #Only for Isometric window size
+    def get_multi_w_h(self,w,h):
+        m = Matrix(self.x1,self.y1,
+                   self.x2,self.y2)
+        m.x1 = m.x1*w
+        m.y1 = m.y1*h
+        m.x2 = m.x2*w
+        m.y2 = m.y2*h
+        return m
 
 def toggle(var):
     if var:

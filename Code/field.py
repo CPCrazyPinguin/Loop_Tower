@@ -6,10 +6,12 @@ import zusatz
 
 class Field():
     def __init__(self, typ, pos, next_field):
-        self.bild = pygame.image.load(os.path.join("Bilder", "iso_feld.png")) #"" + typ + ".png"))
+        self.typ = typ
+        self.bild = pygame.image.load(os.path.join("Bilder/node", "" + typ + ".png"))
         self.pos = pos  
         self.size = zusatz.Vector(0.1, 0.2)
         self.draw_size = zusatz.Vector(int(5), int(5))
+        self.iso_matrix = zusatz.Matrix(0.5, -0.5, 0.25, 0.25)
         self.draw_pos = zusatz.Vector(self.pos.x - self.pos.y, self.pos.x * 0.5 + self.pos.y * 0.5)
         self.center_pos = self.pos
         self.next_field = next_field #int index in felderliste in Karte
@@ -33,10 +35,11 @@ class Field():
         
     def rescale(self,groesse):
         self.draw_size = zusatz.Vector(int(groesse.x * self.size.x), int(groesse.y * self.size.y))
-        self.draw_pos = zusatz.Vector(self.pos.x + self.offset.x, self.pos.y + self.offset.y)
-        #self.draw_pos = self.pos
-        self.draw_pos = zusatz.Vector(self.draw_pos.x * 0.5 * self.draw_size.x - self.pos.y * 0.5 * self.draw_size.y, self.pos.x * 0.25 * self.draw_size.x + self.draw_pos.y * 0.25 * self.draw_size.y)
-        #self.draw_pos = zusatz.Position(self.draw_pos.x * self.draw_size.x, self.draw_pos.y * self.draw_size.y)
+        m = self.iso_matrix.get_multi_w_h(self.draw_size.x,self.draw_size.y)
+        self.draw_pos = m.get_vector_multi(self.pos)
+        self.draw_pos.add(zusatz.Vector(self.offset.x*self.draw_size.x,self.offset.y*self.draw_size.y))
+
+
         self.center_pos = zusatz.Vector(self.draw_pos.x - self.size.x / 2, self.draw_pos.y - self.size.y / 2)
         
         #print(self.draw_pos.x)
