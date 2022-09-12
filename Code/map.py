@@ -4,7 +4,8 @@ import zusatz
 
 class Map():
     def __init__(self,position,max_x,max_y):
-        self.position = position
+        #(0,0) inizialisieren, mittels Map_move Position mit den Feldern synconisieren
+        self.position = zusatz.Vector(0,0)
         self.startpos = zusatz.Vector(3, 3)
         self.endpos = zusatz.Vector(5, 5)
         self.max_x = max_x
@@ -101,8 +102,10 @@ class Map():
         i = int(pos.x + pos.y*self.max_x)
         if self.felder[i].typ == "basic":
             self.felder[i] = field.Field("node",pos, 0)
+            self.felder[i].offset = self.position
         else:
             self.felder[i] = field.Field("basic",pos, 0)
+            self.felder[i].offset = self.position
 
     def is_in_field(self,vect):
         if vect.x <= self.max_x and vect.y <= self.max_y:
